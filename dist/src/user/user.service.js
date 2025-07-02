@@ -24,15 +24,19 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     async create(createUserDto) {
-        const { username, password } = createUserDto;
+        const { password, ...u } = createUserDto;
         console.log(password);
-        const user = await new this.userModel({ username: username, password: await (0, hasher_helper_1.ToHashPassword)(password) });
+        const user = await new this.userModel({ username: u.username, password: await (0, hasher_helper_1.ToHashPassword)(password), roles: u.roles });
         user.save();
         return (0, ToResponse_helpers_1.ToUserResponse)(user);
     }
     async findAll() {
         const users = await this.userModel.find().exec();
         return users.map((user) => (0, ToResponse_helpers_1.ToUserResponse)(user));
+    }
+    async findByEmail(email) {
+        const user = await this.userModel.findOne({ username: email }).exec();
+        return user;
     }
 };
 exports.UserService = UserService;

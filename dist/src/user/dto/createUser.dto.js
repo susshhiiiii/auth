@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const user_schema_1 = require("../entities/user.schema");
 class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
@@ -25,4 +26,9 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ enum: user_schema_1.Role, default: user_schema_1.Role.User }),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "roles", void 0);
 //# sourceMappingURL=createUser.dto.js.map

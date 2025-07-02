@@ -8,7 +8,8 @@ function ToUserResponse(user) {
         token: user.token,
         tokenExpiry: user.tokenExpiry,
         createdAt: user.createdAt,
-        updatedAt: user.updatedAt
+        updatedAt: user.updatedAt,
+        roles: user.roles
     };
     return response;
 }

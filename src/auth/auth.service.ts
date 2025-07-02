@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
+import { LoginDto } from './dto/login.dto';
+import { ComparePassword } from 'src/helpers/hasher.helper';
+import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(private userService: UserService) { }
+  private readonly JWT_SECRET = '6f76fc097c09a069d81550c1927e4569ee53a927a0225e1a3fdc48fa8ead774b35f75cb85cb18f8397c6b5424d22d2029e272c19ac17aa49bd9e45577a6c37b1'
+  
+  async Login(loginDto: LoginDto) {
+    const user = await this.userService.findByEmail(loginDto.username)    
+    if (!user)
+      throw new UnauthorizedException()
+
+    const validateUser = ComparePassword(loginDto.password, user.password)
+    if (!validateUser)
+      throw new UnauthorizedException()
+    const payload = {
+      sub: user._id,
+      username: user.username,      
+      roles:user.roles
+    }
+
+    const token = jwt.sign(payload, this.JWT_SECRET, { expiresIn: '1h' })
+    return {accessToken:token}
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async verifyToken(token: string) {
+    try {
+      return jwt.verify(token,this.JWT_SECRET)
+    }
+    catch (err) {
+      throw new UnauthorizedException('Invalid Token')      
+    }
   }
 }

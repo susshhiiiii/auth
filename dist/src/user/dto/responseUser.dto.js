@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResponseUser = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const user_schema_1 = require("../entities/user.schema");
 class ResponseUser {
 }
 exports.ResponseUser = ResponseUser;
@@ -41,4 +42,9 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], ResponseUser.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], ResponseUser.prototype, "roles", void 0);
 //# sourceMappingURL=responseUser.dto.js.map

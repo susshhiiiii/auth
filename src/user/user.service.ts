@@ -12,9 +12,9 @@ export class UserService {
   constructor(@InjectModel(User.name)private readonly userModel:Model<UserDocument>){}
 
   async create(createUserDto: CreateUserDto) {
-    const { username, password } = createUserDto
+    const { password,...u} = createUserDto
     console.log(password)
-    const user = await new this.userModel({username:username,password:await ToHashPassword(password)})
+    const user = await new this.userModel({username:u.username,password:await ToHashPassword(password),roles:u.roles})
     user.save()
     return ToUserResponse(user)
   }
@@ -23,5 +23,14 @@ export class UserService {
     const users = await this.userModel.find().exec()
     return users.map((user)=>ToUserResponse(user))
   }
-  
+
+  async findByEmail(email: string) {
+    const user = await this.userModel.findOne({ username: email }).exec()
+    return user
+  }  
 }
+
+//Slippers
+//Multivits
+//Controller
+//Gym Shoe  

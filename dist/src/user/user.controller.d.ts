@@ -5,4 +5,5 @@ export declare class UserController {
     constructor(userService: UserService);
     create(createUserDto: CreateUserDto): Promise<import("./dto/responseUser.dto").ResponseUser>;
     findAll(): Promise<import("./dto/responseUser.dto").ResponseUser[]>;
+    getUserInfo(request: any): any;
 }

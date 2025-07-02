@@ -16,6 +16,11 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const createUser_dto_1 = require("./dto/createUser.dto");
+const authguard_service_1 = require("../guard/authguard/authguard.service");
+const swagger_1 = require("@nestjs/swagger");
+const roleguard_service_1 = require("../guard/authguard/roleguard.service");
+const roles_decorator_1 = require("../common/decorators/roles.decorator");
+const user_schema_1 = require("./entities/user.schema");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -25,6 +30,10 @@ let UserController = class UserController {
     }
     findAll() {
         return this.userService.findAll();
+    }
+    getUserInfo(request) {
+        console.log(request.user);
+        return request.user;
     }
 };
 exports.UserController = UserController;
@@ -36,11 +45,23 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "create", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(authguard_service_1.AuthGuardService, roleguard_service_1.RoleGuardService),
+    (0, roles_decorator_1.Roles)(user_schema_1.Role.User),
+    (0, common_1.UseGuards)(authguard_service_1.AuthGuardService),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findAll", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Get)('userInfo'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getUserInfo", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])
