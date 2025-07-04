@@ -14,12 +14,13 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("./entities/user.schema");
 const authguard_module_1 = require("../guard/authguard/authguard.module");
 const auth_module_1 = require("../auth/auth.module");
+const activity_module_1 = require("../activity/activity.module");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]), (0, common_1.forwardRef)(() => authguard_module_1.AuthGuardModule), (0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]), activity_module_1.ActivityModule, (0, common_1.forwardRef)(() => authguard_module_1.AuthGuardModule), (0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService],
         exports: [user_service_1.UserService]

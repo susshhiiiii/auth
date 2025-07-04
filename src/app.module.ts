@@ -5,9 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { AuthGuardService } from './guard/authguard/authguard.service';
 import { AuthGuardModule } from './guard/authguard/authguard.module';
 import { ErrorLogModule } from './error-log/error-log.module';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost/authentication'), UserModule, AuthModule, AuthGuardModule, ErrorLogModule],
+  imports: [MongooseModule.forRoot('mongodb://localhost/authentication'),ActivityModule, UserModule, AuthModule, AuthGuardModule, ErrorLogModule],
   providers: [AuthGuardService],
 
 })

@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ErrorLogService } from './error-log.service';
-import { User } from 'src/user/entities/user.schema';
 
 @Catch()
 export class ErrorLogFilter implements ExceptionFilter {
@@ -18,7 +17,7 @@ export class ErrorLogFilter implements ExceptionFilter {
     
   async catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const request = ctx.getRequest<Request&{user:User}>();
+    const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
     const status =

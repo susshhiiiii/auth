@@ -19,15 +19,18 @@ const mongoose_2 = require("mongoose");
 const user_schema_1 = require("./entities/user.schema");
 const hasher_helper_1 = require("../helpers/hasher.helper");
 const ToResponse_helpers_1 = require("../helpers/ToResponse.helpers");
+const activity_service_1 = require("../activity/activity.service");
 let UserService = class UserService {
-    constructor(userModel) {
+    constructor(userModel, activityService) {
         this.userModel = userModel;
+        this.activityService = activityService;
     }
     async create(createUserDto) {
         const { password, ...u } = createUserDto;
         console.log(password);
         const user = await new this.userModel({ username: u.username, password: await (0, hasher_helper_1.ToHashPassword)(password), roles: u.roles });
         user.save();
+        await this.activityService.logActivity({ action: "Create", resource: "Post", description: "Creted a new post", payload: user });
         return (0, ToResponse_helpers_1.ToUserResponse)(user);
     }
     async findAll() {
@@ -56,6 +59,6 @@ exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model, activity_service_1.ActivityService])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

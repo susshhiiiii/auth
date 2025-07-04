@@ -14,12 +14,13 @@ const auth_module_1 = require("./auth/auth.module");
 const authguard_service_1 = require("./guard/authguard/authguard.service");
 const authguard_module_1 = require("./guard/authguard/authguard.module");
 const error_log_module_1 = require("./error-log/error-log.module");
+const activity_module_1 = require("./activity/activity.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forRoot('mongodb://localhost/authentication'), user_module_1.UserModule, auth_module_1.AuthModule, authguard_module_1.AuthGuardModule, error_log_module_1.ErrorLogModule],
+        imports: [mongoose_1.MongooseModule.forRoot('mongodb://localhost/authentication'), activity_module_1.ActivityModule, user_module_1.UserModule, auth_module_1.AuthModule, authguard_module_1.AuthGuardModule, error_log_module_1.ErrorLogModule],
         providers: [authguard_service_1.AuthGuardService],
     })
 ], AppModule);
