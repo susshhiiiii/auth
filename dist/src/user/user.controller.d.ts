@@ -6,4 +6,6 @@ export declare class UserController {
     create(createUserDto: CreateUserDto): Promise<import("./dto/responseUser.dto").ResponseUser>;
     findAll(): Promise<import("./dto/responseUser.dto").ResponseUser[]>;
     getUserInfo(request: any): any;
+    deleteUser(id: string): Promise<string>;
+    getById(id: string): Promise<import("./dto/responseUser.dto").ResponseUser>;
 }

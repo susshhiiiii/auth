@@ -18,7 +18,6 @@ const user_service_1 = require("./user.service");
 const createUser_dto_1 = require("./dto/createUser.dto");
 const authguard_service_1 = require("../guard/authguard/authguard.service");
 const swagger_1 = require("@nestjs/swagger");
-const roleguard_service_1 = require("../guard/authguard/roleguard.service");
 const roles_decorator_1 = require("../common/decorators/roles.decorator");
 const user_schema_1 = require("./entities/user.schema");
 let UserController = class UserController {
@@ -32,13 +31,18 @@ let UserController = class UserController {
         return this.userService.findAll();
     }
     getUserInfo(request) {
-        console.log(request.user);
         return request.user;
+    }
+    deleteUser(id) {
+        return this.userService.delete(id);
+    }
+    getById(id) {
+        return this.userService.getUserById(id);
     }
 };
 exports.UserController = UserController;
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [createUser_dto_1.CreateUserDto]),
@@ -47,9 +51,8 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(authguard_service_1.AuthGuardService, roleguard_service_1.RoleGuardService),
-    (0, roles_decorator_1.Roles)(user_schema_1.Role.User),
     (0, common_1.UseGuards)(authguard_service_1.AuthGuardService),
+    (0, roles_decorator_1.Roles)(user_schema_1.Role.User),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -57,11 +60,28 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('userInfo'),
+    (0, common_1.UseGuards)(authguard_service_1.AuthGuardService),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getUserInfo", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "deleteUser", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getById", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

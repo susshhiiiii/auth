@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUser.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -28,9 +28,22 @@ export class UserService {
     const user = await this.userModel.findOne({ username: email }).exec()
     return user
   }  
-}
 
-//Slippers
-//Multivits
-//Controller
-//Gym Shoe  
+  async delete(id:string) {
+    const user = this.userModel.findById(id)
+    
+    if (!user)
+      throw new HttpException('No user present with the given id', HttpStatus.NOT_FOUND)
+
+    this.userModel.deleteOne({id:id})
+    return "User is Deleted"
+  }
+
+
+  async getUserById(id: string) {
+    const user = await (await this.userModel.findById(id))
+    if (!user) throw new HttpException('No user present with the given id', HttpStatus.NOT_FOUND)
+    return ToUserResponse(user)
+  }
+  
+}

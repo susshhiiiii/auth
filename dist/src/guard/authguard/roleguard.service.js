@@ -18,20 +18,11 @@ let RoleGuardService = class RoleGuardService {
         this.reflector = reflector;
     }
     canActivate(context) {
-        const requiredRoles = this.reflector.getAllAndOverride(roles_decorator_1.ROLES_KEY, [
-            context.getHandler(),
-            context.getClass()
-        ]);
-        if (!requiredRoles)
+        const roles = this.reflector.get(roles_decorator_1.Roles, context.getHandler());
+        if (!roles)
             return true;
         const { user } = context.switchToHttp().getRequest();
-        if (!user?.roles)
-            throw new common_1.ForbiddenException('No roles Assigned');
-        const hasRole = requiredRoles.some(role => user.roles.includes(role));
-        if (!hasRole) {
-            throw new common_1.ForbiddenException('You do not have the required role');
-        }
-        return true;
+        console.log(user, 'sushant');
     }
 };
 exports.RoleGuardService = RoleGuardService;

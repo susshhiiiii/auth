@@ -4,12 +4,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuardService } from './guard/authguard/authguard.service';
 import { AuthGuardModule } from './guard/authguard/authguard.module';
+import { ErrorLogModule } from './error-log/error-log.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost/authentication'), UserModule, AuthModule, AuthGuardModule],
+  imports: [MongooseModule.forRoot('mongodb://localhost/authentication'), UserModule, AuthModule, AuthGuardModule, ErrorLogModule],
   providers: [AuthGuardService],
 
 })
 export class AppModule {
   
 }
+  

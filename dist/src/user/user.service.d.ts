@@ -11,4 +11,6 @@ export declare class UserService {
     } & {
         __v: number;
     }>;
+    delete(id: string): Promise<string>;
+    getUserById(id: string): Promise<import("./dto/responseUser.dto").ResponseUser>;
 }

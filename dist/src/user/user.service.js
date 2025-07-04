@@ -38,6 +38,19 @@ let UserService = class UserService {
         const user = await this.userModel.findOne({ username: email }).exec();
         return user;
     }
+    async delete(id) {
+        const user = this.userModel.findById(id);
+        if (!user)
+            throw new common_1.HttpException('No user present with the given id', common_1.HttpStatus.NOT_FOUND);
+        this.userModel.deleteOne({ id: id });
+        return "User is Deleted";
+    }
+    async getUserById(id) {
+        const user = await (await this.userModel.findById(id));
+        if (!user)
+            throw new common_1.HttpException('No user present with the given id', common_1.HttpStatus.NOT_FOUND);
+        return (0, ToResponse_helpers_1.ToUserResponse)(user);
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

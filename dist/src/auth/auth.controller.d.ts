@@ -4,6 +4,6 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     login(loginDto: LoginDto): Promise<{
-        accessToken: string;
+        accessToken: any;
     }>;
 }
