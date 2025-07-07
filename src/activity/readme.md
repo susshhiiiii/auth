@@ -19,10 +19,10 @@ This is a **NestJS-compatible activity logging service** that records user actio
 src/
 └── modules/
 └── activity/
-├── activity.module.ts
-├── activity.service.ts
-└── schemas/
-└── activity.schema.ts
+  ├── activity.module.ts
+  ├── activity.service.ts
+  └── schemas/
+  └── activity.schema.ts
 
 ## 🧱 How It Works
 

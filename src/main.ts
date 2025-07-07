@@ -20,6 +20,9 @@ async function bootstrap() {
 
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new RoleGuardService(reflector));
+
+
+  
   const errorLogsService = app.get(ErrorLogService);
   app.useGlobalFilters(new ErrorLogFilter(errorLogsService));
   

@@ -22,4 +22,3 @@ app.useGlobalFilters(new ErrorLogFilter(errorLogsService)); -->
 ## Dependencies
 -- npm i @nestjs/mongoose mongoose
 -- npm i class-validator class transformer
--- npm i @nestjs/
